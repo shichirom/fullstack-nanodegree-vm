@@ -13,15 +13,19 @@ def connect():
 
 def deleteMatches():
     """Remove all the match records from the database."""
-
+    cur=connect()
+    cur.execute("DELETE matche from tournament")
 
 def deletePlayers():
     """Remove all the player records from the database."""
-
+    cur=connect()
+    cur.execute("DELETE player from tournament")
 
 def countPlayers():
     """Returns the number of players currently registered."""
-
+    cur=connect()
+    cur.execute("SELECT count(*) as num from tournament")
+    return int(num)
 
 def registerPlayer(name):
     """Adds a player to the tournament database.
@@ -32,7 +36,8 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
-
+    ur=connect()
+    cur.execure("INSERT INTO tournament ('players') VALUES (name)")
 
 def playerStandings():
     """Returns a list of the players and their win records, sorted by wins.
@@ -47,7 +52,10 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
-
+    standings = ()
+    cur=connect()
+    standings = cur.execure("SELECT (id, player, win, matche) FROM tournament GROUP BY player ORDER BY win DESC")
+    return standings
 
 def reportMatch(winner, loser):
     """Records the outcome of a single match between two players.
@@ -56,7 +64,9 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
- 
+    cur=connect()
+    cur.execure("Update tournament SET tournament.win+=1, tournament.matche+=1 where winner=tournament.id")
+    cur.execure("Update tournament SET tournament.matche+=1 where loser=tournament.id")
  
 def swissPairings():
     """Returns a list of pairs of players for the next round of a match.
@@ -73,5 +83,8 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-
+    pairings=()
+    cur=connect()
+    
+    return pairings(id1, name1, id2, name2)
 
